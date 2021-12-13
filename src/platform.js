@@ -5,11 +5,9 @@ import { BodyHandler } from "./services/body-handler";
 import { Browser } from "./services/browser";
 import { Supports } from "./services/supports";
 
-import { installChunk } from "./core/webpack";
+import { installChunk, importToGlobal } from "./core/webpack";
 
 var mainCall = once();
-
-Object.freeze(mainCall);
 
 export function Platform() { }
 
@@ -80,9 +78,13 @@ Platform.isBrowser = function() {
 }
 
 Platform.isNode = function() {
-  return (typeof process !== 'undefined' && {}.toString.call(process) === '[object process]');
+  return (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
 }
 
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
+}
+
+Platform.import = function() {
+  importToGlobal();
 }

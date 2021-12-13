@@ -1,8 +1,10 @@
+import { getRoot } from "../refs/root";
 import { hasOwnProperty } from "../utility/has-own-property";
 
 var _modules = ({ });
 var _moduleCache = ({ });
 var _installedChunks = ({ });
+var _globalExports = ({ });
 
 function Webpack() { }
 
@@ -53,6 +55,14 @@ Webpack.checkIfChunkIsInstaled = function(chunkId) {
   return _installedChunks[chunkId] === 1;
 }
 
+Webpack.export = function(key, definition) {
+  if (typeof(key) !== 'string') {
+    return;
+  }
+
+  _globalExports[key] = definition;
+}
+
 export function installChunk(chunkId, modules, runtime) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';
@@ -77,4 +87,17 @@ export function installChunk(chunkId, modules, runtime) {
   }
 
   _installedChunks[chunkId] = 1;
+}
+
+export function importToGlobal() {
+  for (let key in _globalExports) {
+    try
+    {
+      getRoot()[key] = _globalExports[key];
+    }
+    catch(err)
+    {
+      console.error(err);
+    }
+  }
 }
