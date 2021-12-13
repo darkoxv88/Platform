@@ -33,17 +33,18 @@ backup:
 
 **/
 
-(function() {
-"use strict";
-
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 var __webpack_exports__ = {};
 
+;// CONCATENATED MODULE: ./src/refs/root.js
 var _root_ = typeof window !== 'undefined' ? window : typeof globalThis !== 'undefined' ? globalThis : typeof self !== 'undefined' ? self : ({ });
 
 function getRoot() {
   return _root_;
 }
 
+;// CONCATENATED MODULE: ./src/utility/once.js
 function once() {
   var hasBeenCalled = false;
 
@@ -58,6 +59,7 @@ function once() {
   }
 }
 
+;// CONCATENATED MODULE: ./src/utility/try-catch.js
 function tryCatch(func, onError) {
   if (typeof func !== 'function') {
     return function() { }
@@ -75,6 +77,9 @@ function tryCatch(func, onError) {
     }
   }
 }
+
+;// CONCATENATED MODULE: ./src/services/body-handler.js
+
 
 function BodyHandlerService() { }
 
@@ -141,6 +146,7 @@ var BodyHandler = new BodyHandlerService();
 
 Object.freeze(BodyHandler);
 
+;// CONCATENATED MODULE: ./src/services/browser.js
 var isBrowser = (navigator.userAgent && typeof document === 'object' && !!document);
 
 function BrowserService() {
@@ -181,6 +187,9 @@ BrowserService.prototype = {
 var Browser = new BrowserService();
 
 Object.freeze(Browser);
+
+;// CONCATENATED MODULE: ./src/services/supports.js
+
 
 var supportsPassiveEvents = false;
 var scrollBehaviorSupported = false;
@@ -225,13 +234,19 @@ var Supports = new SupportsService();
 
 Object.freeze(Supports);
 
+;// CONCATENATED MODULE: ./src/utility/has-own-property.js
 function has_own_property_hasOwnProperty(obj, prop) {
   return (Object.prototype.hasOwnProperty.call(obj, prop))
 }
 
+;// CONCATENATED MODULE: ./src/core/webpack.js
+
+
+
 var _modules = ({ });
 var _moduleCache = ({ });
 var _installedChunks = ({ });
+var _globalExports = ({ });
 
 function Webpack() { }
 
@@ -282,6 +297,14 @@ Webpack.checkIfChunkIsInstaled = function(chunkId) {
   return _installedChunks[chunkId] === 1;
 }
 
+Webpack.export = function(key, definition) {
+  if (typeof(key) !== 'string') {
+    return;
+  }
+
+  _globalExports[key] = definition;
+}
+
 function installChunk(chunkId, modules, runtime) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';
@@ -308,9 +331,30 @@ function installChunk(chunkId, modules, runtime) {
   _installedChunks[chunkId] = 1;
 }
 
-var mainCall = once();
+function importToGlobal() {
+  for (let key in _globalExports) {
+    try
+    {
+      getRoot()[key] = _globalExports[key];
+    }
+    catch(err)
+    {
+      console.error(err);
+    }
+  }
+}
 
-Object.freeze(mainCall);
+;// CONCATENATED MODULE: ./src/platform.js
+
+
+
+
+
+
+
+
+
+var mainCall = once();
 
 function Platform() { }
 
@@ -381,18 +425,30 @@ Platform.isBrowser = function() {
 }
 
 Platform.isNode = function() {
-  return (typeof process !== 'undefined' && {}.toString.call(process) === '[object process]');
+  return (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
 }
 
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
 
+Platform.import = function() {
+  importToGlobal();
+}
+
+;// CONCATENATED MODULE: ./src/environment.js
 var production = true;
 
 function isProduction() {
   return production;
 }
+
+;// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+
 
 var libName = 'Platform'
 
@@ -415,4 +471,5 @@ catch(err)
 	getRoot()['___webpack_export_dp_' + libName + '___'].definition = Platform;
 }
 
-})();
+/******/ })()
+;
