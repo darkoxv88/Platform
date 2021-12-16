@@ -40,5 +40,3 @@ SupportsService.prototype = {
 }
 
 export var Supports = new SupportsService();
-
-Object.freeze(Supports);

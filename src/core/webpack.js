@@ -60,7 +60,7 @@ Webpack.export = function(key, definition) {
     return;
   }
 
-  _globalExports[key] = definition;
+  Object.defineProperty(_globalExports, key, { enumerable: true, get: definition });
 }
 
 export function installChunk(chunkId, modules, runtime) {

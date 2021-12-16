@@ -36,5 +36,3 @@ BrowserService.prototype = {
 }
 
 export var Browser = new BrowserService();
-
-Object.freeze(Browser);

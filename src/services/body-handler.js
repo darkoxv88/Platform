@@ -62,5 +62,3 @@ BodyHandlerService.prototype = {
 }
 
 export var BodyHandler = new BodyHandlerService();
-
-Object.freeze(BodyHandler);

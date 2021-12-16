@@ -1,3 +1,4 @@
+import { getRoot } from "./refs/root";
 import { once } from "./utility/once";
 import { tryCatch } from "./utility/try-catch";
 
@@ -5,6 +6,7 @@ import { BodyHandler } from "./services/body-handler";
 import { Browser } from "./services/browser";
 import { Supports } from "./services/supports";
 
+import { enableConsoleLogging, disableConsoleLogging } from "./core/console";
 import { installChunk, importToGlobal } from "./core/webpack";
 
 var mainCall = once();
@@ -31,6 +33,10 @@ Platform.getBody = function() {
 
 Platform.clearBody = function() {
   BodyHandler.clearBody();
+}
+
+Platform.isBrowser = function() {
+  return Browser.isBrowser();
 }
 
 Platform.isEdge = function() {
@@ -73,8 +79,8 @@ Platform.supportsScrollBehavior = function() {
   return Supports.supportsScrollBehavior();
 }
 
-Platform.isBrowser = function() {
-  return Platform.isBrowser();
+Platform.getRoot = function() {
+  return getRoot();
 }
 
 Platform.isNode = function() {
@@ -87,4 +93,12 @@ Platform.installChunk = function(chunkId, modules, runtime) {
 
 Platform.import = function() {
   importToGlobal();
+}
+
+Platform.enableConsoleLogging = function() {
+  enableConsoleLogging();
+}
+
+Platform.disableConsoleLogging = function() {
+  disableConsoleLogging();
 }

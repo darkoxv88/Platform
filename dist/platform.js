@@ -1,38 +1,3 @@
-/**
-  * 
-	* @author Darko Petrovic
-  * @Link Facebook: https://www.facebook.com/WitchkingOfAngmarr
-  * @Link GitHub: https://github.com/darkoxv88
-  * 
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
-
-
-exports:
-
-  window.Platform;
-
-backup:
-
-  window.___webpack_export_dp_Platform___.definition
-
-**/
-
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 var __webpack_exports__ = {};
@@ -79,8 +44,6 @@ function tryCatch(func, onError) {
 }
 
 ;// CONCATENATED MODULE: ./src/services/body-handler.js
-
-
 function BodyHandlerService() { }
 
 BodyHandlerService.prototype = {
@@ -144,8 +107,6 @@ BodyHandlerService.prototype = {
 
 var BodyHandler = new BodyHandlerService();
 
-Object.freeze(BodyHandler);
-
 ;// CONCATENATED MODULE: ./src/services/browser.js
 var isBrowser = (navigator.userAgent && typeof document === 'object' && !!document);
 
@@ -186,11 +147,7 @@ BrowserService.prototype = {
 
 var Browser = new BrowserService();
 
-Object.freeze(Browser);
-
 ;// CONCATENATED MODULE: ./src/services/supports.js
-
-
 var supportsPassiveEvents = false;
 var scrollBehaviorSupported = false;
 
@@ -232,7 +189,59 @@ SupportsService.prototype = {
 
 var Supports = new SupportsService();
 
-Object.freeze(Supports);
+;// CONCATENATED MODULE: ./src/utility/noop.js
+function noop() { 
+
+}
+
+;// CONCATENATED MODULE: ./src/core/console.js
+var _log = console.log;
+var _info = console.info;
+var _debug = console.debug;
+var _warn = console.warn;
+var _error = console.error;
+
+function forceLog() {
+  _log.apply(console, arguments);
+}
+
+function forceInfo() {
+  _info.apply(console, arguments);
+}
+
+function forceDebug() {
+  _debug.apply(console, arguments);
+}
+
+function forceWarn() {
+  _warn.apply(console, arguments);
+}
+
+function forceError() {
+  _error.apply(console, arguments);
+}
+
+console.log = forceLog;
+console.info = forceInfo;
+console.debug = forceDebug;
+console.warn = forceWarn;
+console.error = forceError;
+
+function disableConsoleLogging() {
+  console.log = noop;
+  console.info = noop;
+  console.debug = noop;
+  console.warn = noop;
+  console.error = noop;
+}
+
+function enableConsoleLogging() {
+  console.log = forceLog;
+  console.info = forceInfo;
+  console.debug = forceDebug;
+  console.warn = forceWarn;
+  console.error = forceError;;
+}
 
 ;// CONCATENATED MODULE: ./src/utility/has-own-property.js
 function has_own_property_hasOwnProperty(obj, prop) {
@@ -240,9 +249,6 @@ function has_own_property_hasOwnProperty(obj, prop) {
 }
 
 ;// CONCATENATED MODULE: ./src/core/webpack.js
-
-
-
 var _modules = ({ });
 var _moduleCache = ({ });
 var _installedChunks = ({ });
@@ -302,7 +308,7 @@ Webpack.export = function(key, definition) {
     return;
   }
 
-  _globalExports[key] = definition;
+  Object.defineProperty(_globalExports, key, { enumerable: true, get: definition });
 }
 
 function installChunk(chunkId, modules, runtime) {
@@ -345,15 +351,6 @@ function importToGlobal() {
 }
 
 ;// CONCATENATED MODULE: ./src/platform.js
-
-
-
-
-
-
-
-
-
 var mainCall = once();
 
 function Platform() { }
@@ -378,6 +375,10 @@ Platform.getBody = function() {
 
 Platform.clearBody = function() {
   BodyHandler.clearBody();
+}
+
+Platform.isBrowser = function() {
+  return Browser.isBrowser();
 }
 
 Platform.isEdge = function() {
@@ -420,8 +421,8 @@ Platform.supportsScrollBehavior = function() {
   return Supports.supportsScrollBehavior();
 }
 
-Platform.isBrowser = function() {
-  return Platform.isBrowser();
+Platform.getRoot = function() {
+  return getRoot();
 }
 
 Platform.isNode = function() {
@@ -436,6 +437,14 @@ Platform.import = function() {
   importToGlobal();
 }
 
+Platform.enableConsoleLogging = function() {
+  enableConsoleLogging();
+}
+
+Platform.disableConsoleLogging = function() {
+  disableConsoleLogging();
+}
+
 ;// CONCATENATED MODULE: ./src/environment.js
 var production = true;
 
@@ -444,18 +453,12 @@ function isProduction() {
 }
 
 ;// CONCATENATED MODULE: ./src/index.js
-
-
-
-
-
-
 var libName = 'Platform'
 
 try
 {
   if (getRoot()[libName] && isProduction()) {
-    throw new Error('window["' + libName + '"] is already in use! Switching to: ' + 'window["___webpack_export_' + libName + '___"].definition');
+    throw new Error('window["' + libName + '"] is already in use!');
   }
 
   getRoot()[libName] = Platform;
@@ -463,12 +466,6 @@ try
 catch(err)
 {
   console.error(err);
-
-	if (typeof(getRoot()['___webpack_export_dp_' + libName + '___']) !== 'object' || !(getRoot()['___webpack_export_dp_' + libName + '___'])) {
-		getRoot()['___webpack_export_dp_' + libName + '___'] = ({ });
-	}
-
-	getRoot()['___webpack_export_dp_' + libName + '___'].definition = Platform;
 }
 
 /******/ })()
