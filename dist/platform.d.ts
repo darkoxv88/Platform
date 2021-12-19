@@ -8,19 +8,13 @@ declare class Webpack {
 
 export declare class Platfoem {
 
-  static main(
-    proc: () => void,
-    onError?: (err: any) => void
-  );
-
-  static onLoad(
-    proc: (ev: Event) => void,
-    onError?: (err: any) => void
-  );
+  static main(proc: () => void, onError?: (err: any) => void): void;
+  static onLoad(proc: (ev: Event) => void, onError?: (err: any) => void): void;
 
   static isBodyLoaded(): boolean;
   static getBody(): HTMLElement;
   static clearBody(): void;
+  static getRoot(): Window | Object;
 
   static isBrowser(): boolean;
   static isEdge(): boolean;
@@ -40,7 +34,7 @@ export declare class Platfoem {
     chunkId: string,
     modules: { [key: string]: (exports: Object, webpack: Webpack) => void }, 
     runtime?: (webpackp: Webpack) => void
-  );
+  ): void;
 
   static import(): void;
 
