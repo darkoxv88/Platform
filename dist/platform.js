@@ -1,5 +1,36 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
+/**
+  * 
+	* @author Darko Petrovic
+  * @Link Facebook: https://www.facebook.com/WitchkingOfAngmarr
+  * @Link GitHub: https://github.com/darkoxv88
+  * 
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+
+exports:
+
+  window.Platform;
+
+**/
+
+(function() {
+"use strict";
 var __webpack_exports__ = {};
 
 ;// CONCATENATED MODULE: ./src/refs/root.js
@@ -251,7 +282,6 @@ function has_own_property_hasOwnProperty(obj, prop) {
 ;// CONCATENATED MODULE: ./src/core/webpack.js
 var _modules = ({ });
 var _moduleCache = ({ });
-var _installedChunks = ({ });
 var _globalExports = ({ });
 
 function Webpack() { }
@@ -285,8 +315,6 @@ Webpack.require = function(moduleId) {
   {
     console.error('There was an error while loading module "' + moduleId +'".', err);
 
-    delete(_moduleCache[moduleId]);
-
     return ({ });
   }
 }
@@ -297,10 +325,6 @@ Webpack.define = function(exports, definition) {
       Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
     }
   }
-}
-
-Webpack.checkIfChunkIsInstaled = function(chunkId) {
-  return _installedChunks[chunkId] === 1;
 }
 
 Webpack.export = function(key, definition) {
@@ -322,7 +346,7 @@ function installChunk(chunkId, modules, runtime) {
 
   for(var moduleKey in modules) {
     if (has_own_property_hasOwnProperty(_modules, moduleKey)) {
-      console.warn('Module name "' + moduleKey + '" is taken!');
+      console.warn('Module named "' + moduleKey + '" already exists!');
 
       continue;
     }
@@ -333,8 +357,6 @@ function installChunk(chunkId, modules, runtime) {
   if(typeof(runtime) === 'function') {
     runtime(Webpack);
   }
-
-  _installedChunks[chunkId] = 1;
 }
 
 function importToGlobal() {
@@ -445,19 +467,12 @@ Platform.disableConsoleLogging = function() {
   disableConsoleLogging();
 }
 
-;// CONCATENATED MODULE: ./src/environment.js
-var production = true;
-
-function isProduction() {
-  return production;
-}
-
 ;// CONCATENATED MODULE: ./src/index.js
 var libName = 'Platform'
 
 try
 {
-  if (getRoot()[libName] && isProduction()) {
+  if (getRoot()[libName]) {
     throw new Error('window["' + libName + '"] is already in use!');
   }
 
@@ -468,5 +483,5 @@ catch(err)
   console.error(err);
 }
 
-/******/ })()
+})()
 ;

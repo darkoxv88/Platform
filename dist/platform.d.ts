@@ -2,7 +2,6 @@ declare class Webpack {
 
   static require(id: string): Object;
   static define(exports: Object, definition: { [key: string]: () => any }): void;
-  static checkIfChunkIsInstaled(): boolean;
   static export(key: string, definition: any): void;
 
 }
@@ -11,12 +10,12 @@ export declare class Platfoem {
 
   static main(
     proc: () => void,
-    onError: (err: any) => void
+    onError?: (err: any) => void
   );
 
   static onLoad(
     proc: (ev: Event) => void,
-    onError: (err: any) => void
+    onError?: (err: any) => void
   );
 
   static isBodyLoaded(): boolean;
@@ -38,9 +37,9 @@ export declare class Platfoem {
   static isNode(): boolean;
 
   static installChunk(
-    chunkId: string, 
+    chunkId: string,
     modules: { [key: string]: (exports: Object, webpack: Webpack) => void }, 
-    runtime: (webpackp: Webpack) => void
+    runtime?: (webpackp: Webpack) => void
   );
 
   static import(): void;

@@ -3,7 +3,6 @@ import { hasOwnProperty } from "../utility/has-own-property";
 
 var _modules = ({ });
 var _moduleCache = ({ });
-var _installedChunks = ({ });
 var _globalExports = ({ });
 
 function Webpack() { }
@@ -37,8 +36,6 @@ Webpack.require = function(moduleId) {
   {
     console.error('There was an error while loading module "' + moduleId +'".', err);
 
-    delete(_moduleCache[moduleId]);
-
     return ({ });
   }
 }
@@ -49,10 +46,6 @@ Webpack.define = function(exports, definition) {
       Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
     }
   }
-}
-
-Webpack.checkIfChunkIsInstaled = function(chunkId) {
-  return _installedChunks[chunkId] === 1;
 }
 
 Webpack.export = function(key, definition) {
@@ -74,7 +67,7 @@ export function installChunk(chunkId, modules, runtime) {
 
   for(var moduleKey in modules) {
     if (hasOwnProperty(_modules, moduleKey)) {
-      console.warn('Module name "' + moduleKey + '" is taken!');
+      console.warn('Module named "' + moduleKey + '" already exists!');
 
       continue;
     }
@@ -85,8 +78,6 @@ export function installChunk(chunkId, modules, runtime) {
   if(typeof(runtime) === 'function') {
     runtime(Webpack);
   }
-
-  _installedChunks[chunkId] = 1;
 }
 
 export function importToGlobal() {
