@@ -80,11 +80,19 @@ export function installChunk(chunkId, modules, runtime) {
   }
 }
 
-export function importToGlobal() {
-  for (let key in _globalExports) {
+export function importToGlobal(exe) {
+  var _exe = function(key, value) {
+    getRoot()[key] = value;
+  }
+
+  if (typeof(exe) === 'function') {
+    _exe = exe;
+  }
+
+  for (var key in _globalExports) {
     try
     {
-      getRoot()[key] = _globalExports[key];
+      _exe(key, _globalExports[key]);
     }
     catch(err)
     {

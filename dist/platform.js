@@ -62,14 +62,15 @@ function tryCatch(func, onError) {
   }
 
   return function() {
-    try {
+    try 
+    {
       return func.apply(this, arguments);
-    } catch (e) {
+    } 
+    catch (e) 
+    {
       if (typeof onError === 'function') {
         return onError(e)
       };
-
-      return null;
     }
   }
 }
@@ -79,13 +80,11 @@ function BodyHandlerService() { }
 
 BodyHandlerService.prototype = {
   onBodyLoad: function(onLoad, onError) {
-    var init = tryCatch(onLoad, onError);
-
     if (document.readyState === 'complete') {
-      init();
-
       return;
     }
+
+    var init = tryCatch(onLoad, onError);
 
     if (window.addEventListener) {
       window.addEventListener("load", init, false);
@@ -128,12 +127,6 @@ BodyHandlerService.prototype = {
       return document.body;
     }
   },
-
-  clearBody: function() {
-    if (typeof document != 'undefined') {
-      return document.body.innerHTML = '';
-    }
-  }
 }
 
 var BodyHandler = new BodyHandlerService();
@@ -203,7 +196,7 @@ else if ('scrollBehavior' in document.documentElement.style) {
   scrollBehaviorSupported = true;
 }
 else if (Element.prototype.scrollTo) {
-  scrollBehaviorSupported = !/\{\s*\[native code\]\s*\}/.test(Element.prototype.scrollTo.toString());
+  scrollBehaviorSupported = !(/\{\s*\[native code\]\s*\}/.test(Element.prototype.scrollTo.toString()));
 }
 
 function SupportsService() { }
@@ -221,9 +214,7 @@ SupportsService.prototype = {
 var Supports = new SupportsService();
 
 ;// CONCATENATED MODULE: ./src/utility/noop.js
-function noop() { 
-
-}
+function noop() { }
 
 ;// CONCATENATED MODULE: ./src/core/console.js
 var _log = console.log;
@@ -359,11 +350,19 @@ function installChunk(chunkId, modules, runtime) {
   }
 }
 
-function importToGlobal() {
-  for (let key in _globalExports) {
+function importToGlobal(exe) {
+  var _exe = function(key, value) {
+    getRoot()[key] = value;
+  }
+
+  if (typeof(exe) === 'function') {
+    _exe = exe;
+  }
+
+  for (var key in _globalExports) {
     try
     {
-      getRoot()[key] = _globalExports[key];
+      _exe(key, _globalExports[key]);
     }
     catch(err)
     {
@@ -373,14 +372,15 @@ function importToGlobal() {
 }
 
 ;// CONCATENATED MODULE: ./src/platform.js
-var mainCall = once();
+var _mainCall = once();
+var _isNode = (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
 
 function Platform() { }
 
 Platform.prototype = { }
 
 Platform.main = function(proc, onError) {
-  mainCall(tryCatch(proc, onError));
+  _mainCall(tryCatch(proc, onError));
 }
 
 Platform.onLoad = function(proc, onError) {
@@ -393,10 +393,6 @@ Platform.isBodyLoaded = function() {
 
 Platform.getBody = function() {
   return BodyHandler.getBody();
-}
-
-Platform.clearBody = function() {
-  BodyHandler.clearBody();
 }
 
 Platform.isBrowser = function() {
@@ -448,15 +444,15 @@ Platform.getRoot = function() {
 }
 
 Platform.isNode = function() {
-  return (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
+  return _isNode;
 }
 
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
 
-Platform.import = function() {
-  importToGlobal();
+Platform.import = function(exe) {
+  importToGlobal(exe);
 }
 
 Platform.enableConsoleLogging = function() {
@@ -472,10 +468,6 @@ var libName = 'Platform'
 
 try
 {
-  if (getRoot()[libName]) {
-    throw new Error('window["' + libName + '"] is already in use!');
-  }
-
   getRoot()[libName] = Platform;
 }
 catch(err)
@@ -483,5 +475,4 @@ catch(err)
   console.error(err);
 }
 
-})()
-;
+})();

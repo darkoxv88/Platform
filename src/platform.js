@@ -9,14 +9,15 @@ import { Supports } from "./services/supports";
 import { enableConsoleLogging, disableConsoleLogging } from "./core/console";
 import { installChunk, importToGlobal } from "./core/webpack";
 
-var mainCall = once();
+var _mainCall = once();
+var _isNode = (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
 
 export function Platform() { }
 
 Platform.prototype = { }
 
 Platform.main = function(proc, onError) {
-  mainCall(tryCatch(proc, onError));
+  _mainCall(tryCatch(proc, onError));
 }
 
 Platform.onLoad = function(proc, onError) {
@@ -29,10 +30,6 @@ Platform.isBodyLoaded = function() {
 
 Platform.getBody = function() {
   return BodyHandler.getBody();
-}
-
-Platform.clearBody = function() {
-  BodyHandler.clearBody();
 }
 
 Platform.isBrowser = function() {
@@ -84,15 +81,15 @@ Platform.getRoot = function() {
 }
 
 Platform.isNode = function() {
-  return (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
+  return _isNode;
 }
 
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
 
-Platform.import = function() {
-  importToGlobal();
+Platform.import = function(exe) {
+  importToGlobal(exe);
 }
 
 Platform.enableConsoleLogging = function() {

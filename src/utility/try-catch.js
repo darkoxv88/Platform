@@ -4,14 +4,15 @@ export function tryCatch(func, onError) {
   }
 
   return function() {
-    try {
+    try 
+    {
       return func.apply(this, arguments);
-    } catch (e) {
+    } 
+    catch (e) 
+    {
       if (typeof onError === 'function') {
         return onError(e)
       };
-
-      return null;
     }
   }
 }

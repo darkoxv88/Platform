@@ -4,13 +4,11 @@ function BodyHandlerService() { }
 
 BodyHandlerService.prototype = {
   onBodyLoad: function(onLoad, onError) {
-    var init = tryCatch(onLoad, onError);
-
     if (document.readyState === 'complete') {
-      init();
-
       return;
     }
+
+    var init = tryCatch(onLoad, onError);
 
     if (window.addEventListener) {
       window.addEventListener("load", init, false);
@@ -53,12 +51,6 @@ BodyHandlerService.prototype = {
       return document.body;
     }
   },
-
-  clearBody: function() {
-    if (typeof document != 'undefined') {
-      return document.body.innerHTML = '';
-    }
-  }
 }
 
 export var BodyHandler = new BodyHandlerService();

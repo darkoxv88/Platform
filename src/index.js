@@ -36,10 +36,6 @@ var libName = 'Platform'
 
 try
 {
-  if (getRoot()[libName]) {
-    throw new Error('window["' + libName + '"] is already in use!');
-  }
-
   getRoot()[libName] = Platform;
 }
 catch(err)

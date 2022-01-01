@@ -13,7 +13,6 @@ export declare class Platfoem {
 
   static isBodyLoaded(): boolean;
   static getBody(): HTMLElement;
-  static clearBody(): void;
   static getRoot(): Window | Object;
 
   static isBrowser(): boolean;
@@ -36,7 +35,7 @@ export declare class Platfoem {
     runtime?: (webpackp: Webpack) => void
   ): void;
 
-  static import(): void;
+  static import(exe?: (importName: string, importValue: any) => void): void;
 
   static enableConsoleLogging(): void;
   static disableConsoleLogging(): void;

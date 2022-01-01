@@ -24,7 +24,7 @@ else if ('scrollBehavior' in document.documentElement.style) {
   scrollBehaviorSupported = true;
 }
 else if (Element.prototype.scrollTo) {
-  scrollBehaviorSupported = !/\{\s*\[native code\]\s*\}/.test(Element.prototype.scrollTo.toString());
+  scrollBehaviorSupported = !(/\{\s*\[native code\]\s*\}/.test(Element.prototype.scrollTo.toString()));
 }
 
 export function SupportsService() { }
