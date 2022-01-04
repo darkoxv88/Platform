@@ -7,7 +7,8 @@ import { Browser } from "./services/browser";
 import { Supports } from "./services/supports";
 
 import { enableConsoleLogging, disableConsoleLogging } from "./core/console";
-import { installChunk, importToGlobal } from "./core/webpack";
+import { initializeModule, installChunk, importToGlobal } from "./core/webpack";
+import { PlatformUtilityService } from "./core/platform-utility";
 
 var _mainCall = once();
 var _isNode = (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
@@ -84,6 +85,10 @@ Platform.isNode = function() {
   return _isNode;
 }
 
+Platform.usePlatformUtility = function() {
+  return initializeModule('PlatformUtility').definition;
+}
+
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
@@ -99,3 +104,17 @@ Platform.enableConsoleLogging = function() {
 Platform.disableConsoleLogging = function() {
   disableConsoleLogging();
 }
+
+installChunk(
+  'Platform',
+  {
+    'Platform': (function(__exports__, __webpack__) {
+      __webpack__.define(__exports__, { 'definition': (function() { return Platform; }) });
+    }),
+    'PlatformUtility': (function(__exports__, __webpack__) {
+      var _platformUtility = new PlatformUtilityService();
+
+      __webpack__.define(__exports__, { 'definition': (function() { return _platformUtility; }) });
+    })
+  }
+);

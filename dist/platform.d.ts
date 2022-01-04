@@ -6,6 +6,24 @@ declare class Webpack {
 
 }
 
+declare class PlatformUtility {
+
+  public isUndef(v: any): boolean;
+  public isDef(v: any): boolean;
+  public isTrue(v: any): boolean;
+  public isFalse(v: any): boolean;
+  public isPrimitive(v: any): boolean;
+  public isObject(obj: any): boolean;
+  public isPlainObject(obj: any): boolean;
+  public isRegExp(v: any): boolean;
+  public isValidArrayIndex(val: number): boolean;
+  public isPromise(v: any): boolean;
+  public noop(): void;
+  public no(): false;
+  public hasProperty(obj: Object, prop: string): boolean;
+
+}
+
 export declare class Platfoem {
 
   static main(proc: () => void, onError?: (err: any) => void): void;
@@ -28,6 +46,8 @@ export declare class Platfoem {
   static supportsPassiveEventListeners(): boolean;
   static supportsScrollBehavior(): boolean;
   static isNode(): boolean;
+
+  static usePlatformUtility(): PlatformUtility;
 
   static installChunk(
     chunkId: string,

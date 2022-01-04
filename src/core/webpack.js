@@ -34,9 +34,9 @@ Webpack.require = function(moduleId) {
   }
   catch (err)
   {
-    console.error('There was an error while loading module "' + moduleId +'".', err);
+    console.error('There was an error while loading module "' + moduleId +'".');
 
-    return ({ });
+    throw err;
   }
 }
 
@@ -56,12 +56,16 @@ Webpack.export = function(key, definition) {
   Object.defineProperty(_globalExports, key, { enumerable: true, get: definition });
 }
 
+export function initializeModule(id) {
+  return Webpack.require(id);
+}
+
 export function installChunk(chunkId, modules, runtime) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';
   }
 
-  if (typeof(modules) !== 'object') {
+  if (typeof(modules) !== 'object' || !modules) {
     modules = ({ });
   }
 

@@ -2,12 +2,10 @@ export function once() {
   var hasBeenCalled = false;
 
   return function(fn) {
-    if (hasBeenCalled) {
-      return;
+    if (!hasBeenCalled) {
+      hasBeenCalled = true;
+      
+      return fn();
     }
-
-    hasBeenCalled = true;
-
-    return fn();
   }
 }
