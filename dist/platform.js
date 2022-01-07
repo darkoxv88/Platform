@@ -30,8 +30,7 @@ exports:
 **/
 
 (function() {
-"use strict";
-var __webpack_exports__ = {};
+	"use strict";
 
 ;// CONCATENATED MODULE: ./src/refs/root.js
 var _root_ = typeof window !== 'undefined' ? window : typeof globalThis !== 'undefined' ? globalThis : typeof self !== 'undefined' ? self : ({ });
@@ -53,10 +52,13 @@ function once() {
   }
 }
 
+;// CONCATENATED MODULE: ./src/utility/noop.js
+function noop() { }
+
 ;// CONCATENATED MODULE: ./src/utility/try-catch.js
 function tryCatch(func, onError) {
   if (typeof func !== 'function') {
-    return function() { }
+    return noop;
   }
 
   return function() {
@@ -210,9 +212,6 @@ SupportsService.prototype = {
 }
 
 var Supports = new SupportsService();
-
-;// CONCATENATED MODULE: ./src/utility/noop.js
-function noop() { }
 
 ;// CONCATENATED MODULE: ./src/core/console.js
 var _log = console.log;
@@ -378,7 +377,9 @@ function PlatformUtilityService() {
   var _this = this;
 
   for (var key in _this) {
-    getRoot()[key] = _this[key];
+    if (!getRoot()[key]) {
+      getRoot()[key] = _this[key];
+    }
   }
 }
 
@@ -428,9 +429,7 @@ PlatformUtilityService.prototype = {
     return (typeof(v.then) === 'function' && typeof(v.catch) === 'function');
   },
 
-  noop: function() { 
-
-  },
+  noop: function() { },
 
   no: function() {
     return false;
@@ -564,4 +563,3 @@ catch(err)
 }
 
 })();
-  

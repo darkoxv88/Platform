@@ -6,23 +6,23 @@ var _debug = console.debug;
 var _warn = console.warn;
 var _error = console.error;
 
-export function forceLog() {
+function forceLog() {
   _log.apply(console, arguments);
 }
 
-export function forceInfo() {
+function forceInfo() {
   _info.apply(console, arguments);
 }
 
-export function forceDebug() {
+function forceDebug() {
   _debug.apply(console, arguments);
 }
 
-export function forceWarn() {
+function forceWarn() {
   _warn.apply(console, arguments);
 }
 
-export function forceError() {
+function forceError() {
   _error.apply(console, arguments);
 }
 

@@ -4,7 +4,9 @@ export function PlatformUtilityService() {
   var _this = this;
 
   for (var key in _this) {
-    getRoot()[key] = _this[key];
+    if (!getRoot()[key]) {
+      getRoot()[key] = _this[key];
+    }
   }
 }
 
@@ -54,9 +56,7 @@ PlatformUtilityService.prototype = {
     return (typeof(v.then) === 'function' && typeof(v.catch) === 'function');
   },
 
-  noop: function() { 
-
-  },
+  noop: function() { },
 
   no: function() {
     return false;
