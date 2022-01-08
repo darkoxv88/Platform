@@ -53,7 +53,7 @@ Webpack.export = function(key, definition) {
     return;
   }
 
-  Object.defineProperty(_globalExports, key, { enumerable: true, get: definition });
+  Object.defineProperty(_globalExports, key, { enumerable: true, get: (function() { return definition }) });
 }
 
 export function initializeModule(id) {
