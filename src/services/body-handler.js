@@ -4,11 +4,13 @@ function BodyHandlerService() { }
 
 BodyHandlerService.prototype = {
   onBodyLoad: function(onLoad, onError) {
+    var init = tryCatch(onLoad, onError);
+
     if (document.readyState === 'complete') {
+      init(null);
+
       return;
     }
-
-    var init = tryCatch(onLoad, onError);
 
     if (window.addEventListener) {
       window.addEventListener("load", init, false);
@@ -44,12 +46,6 @@ BodyHandlerService.prototype = {
     }
 
     return false;
-  },
-
-  getBody: function() {
-    if (typeof document != 'undefined') {
-      return document.body;
-    }
   },
 }
 

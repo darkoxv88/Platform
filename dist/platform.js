@@ -29,8 +29,8 @@ exports:
 
 **/
 
-(function() {
-	"use strict";
+(function() { // webpackBootstrap
+"use strict";
 
 ;// CONCATENATED MODULE: ./src/refs/root.js
 var _root_ = typeof window !== 'undefined' ? window : typeof globalThis !== 'undefined' ? globalThis : typeof self !== 'undefined' ? self : ({ });
@@ -44,7 +44,7 @@ function once() {
   var hasBeenCalled = false;
 
   return function(fn) {
-    if (!hasBeenCalled) {
+    if (hasBeenCalled == false) {
       hasBeenCalled = true;
       
       return fn();
@@ -80,11 +80,13 @@ function BodyHandlerService() { }
 
 BodyHandlerService.prototype = {
   onBodyLoad: function(onLoad, onError) {
+    var init = tryCatch(onLoad, onError);
+
     if (document.readyState === 'complete') {
+      init(null);
+
       return;
     }
-
-    var init = tryCatch(onLoad, onError);
 
     if (window.addEventListener) {
       window.addEventListener("load", init, false);
@@ -120,12 +122,6 @@ BodyHandlerService.prototype = {
     }
 
     return false;
-  },
-
-  getBody: function() {
-    if (typeof document != 'undefined') {
-      return document.body;
-    }
   },
 }
 
@@ -291,20 +287,11 @@ Webpack.require = function(moduleId) {
     exports: ({ })
   };
 
-  try
-  {
-    _modules[moduleId](_moduleCache[moduleId].exports, Webpack);
+  _modules[moduleId](_moduleCache[moduleId].exports, Webpack);
 
-    _moduleCache[moduleId].loaded = true;
+  _moduleCache[moduleId].loaded = true;
 
-    return _moduleCache[moduleId].exports;
-  }
-  catch (err)
-  {
-    console.error('There was an error while loading module "' + moduleId +'".');
-
-    throw err;
-  }
+  return _moduleCache[moduleId].exports;
 }
 
 Webpack.define = function(exports, definition) {
@@ -327,7 +314,7 @@ function initializeModule(id) {
   return Webpack.require(id);
 }
 
-function installChunk(chunkId, modules, runtime) {
+function installChunk(chunkId, modules, exe) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';
   }
@@ -346,8 +333,15 @@ function installChunk(chunkId, modules, runtime) {
     _modules[moduleKey] = modules[moduleKey];
   }
 
-  if(typeof(runtime) === 'function') {
-    runtime(Webpack);
+  if(typeof(exe) === 'function') {
+    try
+    {
+      exe(Webpack);
+    }
+    catch(err)
+    {
+      console.error(err);
+    }
   }
 }
 
@@ -449,19 +443,13 @@ function Platform() { }
 Platform.prototype = { }
 
 Platform.main = function(proc, onError) {
-  _mainCall(tryCatch(proc, onError));
-}
-
-Platform.onLoad = function(proc, onError) {
-  BodyHandler.onBodyLoad(proc, onError);
+  _mainCall(function() {
+    BodyHandler.onBodyLoad(proc, onError);
+  });
 }
 
 Platform.isBodyLoaded = function() {
   return BodyHandler.isBodyLoaded();
-}
-
-Platform.getBody = function() {
-  return BodyHandler.getBody();
 }
 
 Platform.isBrowser = function() {

@@ -24,20 +24,11 @@ Webpack.require = function(moduleId) {
     exports: ({ })
   };
 
-  try
-  {
-    _modules[moduleId](_moduleCache[moduleId].exports, Webpack);
+  _modules[moduleId](_moduleCache[moduleId].exports, Webpack);
 
-    _moduleCache[moduleId].loaded = true;
+  _moduleCache[moduleId].loaded = true;
 
-    return _moduleCache[moduleId].exports;
-  }
-  catch (err)
-  {
-    console.error('There was an error while loading module "' + moduleId +'".');
-
-    throw err;
-  }
+  return _moduleCache[moduleId].exports;
 }
 
 Webpack.define = function(exports, definition) {
@@ -60,7 +51,7 @@ export function initializeModule(id) {
   return Webpack.require(id);
 }
 
-export function installChunk(chunkId, modules, runtime) {
+export function installChunk(chunkId, modules, exe) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';
   }
@@ -79,8 +70,15 @@ export function installChunk(chunkId, modules, runtime) {
     _modules[moduleKey] = modules[moduleKey];
   }
 
-  if(typeof(runtime) === 'function') {
-    runtime(Webpack);
+  if(typeof(exe) === 'function') {
+    try
+    {
+      exe(Webpack);
+    }
+    catch(err)
+    {
+      console.error(err);
+    }
   }
 }
 

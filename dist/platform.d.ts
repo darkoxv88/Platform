@@ -26,11 +26,9 @@ declare class PlatformUtility {
 
 export declare class Platfoem {
 
-  static main(proc: () => void, onError?: (err: any) => void): void;
-  static onLoad(proc: (ev: Event) => void, onError?: (err: any) => void): void;
+  static main(proc: (ev: Event) => void, onError?: (err: any) => void): void;
 
   static isBodyLoaded(): boolean;
-  static getBody(): HTMLElement;
   static getRoot(): Window | Object;
 
   static isBrowser(): boolean;
@@ -52,7 +50,7 @@ export declare class Platfoem {
   static installChunk(
     chunkId: string,
     modules: { [key: string]: (exports: Object, webpack: Webpack) => void }, 
-    runtime?: (webpackp: Webpack) => void
+    exe?: (webpackp: Webpack) => void
   ): void;
 
   static import(exe?: (importName: string, importValue: any) => void): void;

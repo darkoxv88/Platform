@@ -2,7 +2,7 @@ export function once() {
   var hasBeenCalled = false;
 
   return function(fn) {
-    if (!hasBeenCalled) {
+    if (hasBeenCalled == false) {
       hasBeenCalled = true;
       
       return fn();

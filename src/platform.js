@@ -1,6 +1,5 @@
 import { getRoot } from "./refs/root";
 import { once } from "./utility/once";
-import { tryCatch } from "./utility/try-catch";
 
 import { BodyHandler } from "./services/body-handler";
 import { Browser } from "./services/browser";
@@ -18,19 +17,13 @@ export function Platform() { }
 Platform.prototype = { }
 
 Platform.main = function(proc, onError) {
-  _mainCall(tryCatch(proc, onError));
-}
-
-Platform.onLoad = function(proc, onError) {
-  BodyHandler.onBodyLoad(proc, onError);
+  _mainCall(function() {
+    BodyHandler.onBodyLoad(proc, onError);
+  });
 }
 
 Platform.isBodyLoaded = function() {
   return BodyHandler.isBodyLoaded();
-}
-
-Platform.getBody = function() {
-  return BodyHandler.getBody();
 }
 
 Platform.isBrowser = function() {
