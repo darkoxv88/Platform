@@ -24,7 +24,7 @@ declare class PlatformUtility {
 
 }
 
-export declare class Platfoem {
+export declare class Platform {
 
   static main(proc: (ev: Event) => void, onError?: (err: any) => void): void;
 
