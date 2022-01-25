@@ -216,32 +216,6 @@ var _debug = console.debug;
 var _warn = console.warn;
 var _error = console.error;
 
-function forceLog() {
-  _log.apply(console, arguments);
-}
-
-function forceInfo() {
-  _info.apply(console, arguments);
-}
-
-function forceDebug() {
-  _debug.apply(console, arguments);
-}
-
-function forceWarn() {
-  _warn.apply(console, arguments);
-}
-
-function forceError() {
-  _error.apply(console, arguments);
-}
-
-console.log = forceLog;
-console.info = forceInfo;
-console.debug = forceDebug;
-console.warn = forceWarn;
-console.error = forceError;
-
 function disableConsoleLogging() {
   console.log = noop;
   console.info = noop;
@@ -251,11 +225,11 @@ function disableConsoleLogging() {
 }
 
 function enableConsoleLogging() {
-  console.log = forceLog;
-  console.info = forceInfo;
-  console.debug = forceDebug;
-  console.warn = forceWarn;
-  console.error = forceError;;
+  console.log = _log;
+  console.info = _info;
+  console.debug = _debug;
+  console.warn = _warn;
+  console.error = _error;
 }
 
 ;// CONCATENATED MODULE: ./src/utility/has-own-property.js
