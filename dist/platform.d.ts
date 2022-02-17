@@ -49,8 +49,8 @@ export declare class Platform {
 
   static installChunk(
     chunkId: string,
-    modules: { [key: string]: (exports: Object, webpack: Webpack) => void }, 
-    exe?: (webpackp: Webpack) => void
+    modules: { [key: string]: (exports: Object, webpack: typeof Webpack) => void }, 
+    exe?: (webpackp: typeof Webpack) => void
   ): void;
 
   static import(exe?: (importName: string, importValue: any) => void): void;
