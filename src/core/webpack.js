@@ -47,10 +47,6 @@ Webpack.export = function(key, definition) {
   Object.defineProperty(_globalExports, key, { enumerable: true, get: (function() { return definition }) });
 }
 
-export function initializeModule(id) {
-  return Webpack.require(id);
-}
-
 export function installChunk(chunkId, modules, exe) {
   if (typeof(chunkId) !== 'string') {
     chunkId = 'noname';

@@ -1,26 +1,39 @@
+/**
+  * 
+	* @author Darko Petrovic
+  * @Link Facebook: https://www.facebook.com/WitchkingOfAngmarr
+  * @Link GitHub: https://github.com/darkoxv88
+  * 
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+
+exports:
+
+  window.Platform;
+
+**/
+
 declare class Webpack {
 
   static require(id: string): Object;
   static define(exports: Object, definition: { [key: string]: () => any }): void;
   static export(key: string, definition: any): void;
-
-}
-
-declare class PlatformUtility {
-
-  public isUndef(v: any): boolean;
-  public isDef(v: any): boolean;
-  public isTrue(v: any): boolean;
-  public isFalse(v: any): boolean;
-  public isPrimitive(v: any): boolean;
-  public isObject(obj: any): boolean;
-  public isPlainObject(obj: any): boolean;
-  public isRegExp(v: any): boolean;
-  public isValidArrayIndex(val: number): boolean;
-  public isPromise(v: any): boolean;
-  public noop(): void;
-  public no(): false;
-  public hasProperty(obj: Object, prop: string): boolean;
 
 }
 
@@ -45,8 +58,6 @@ export declare class Platform {
   static supportsScrollBehavior(): boolean;
   static isNode(): boolean;
 
-  static usePlatformUtility(): PlatformUtility;
-
   static installChunk(
     chunkId: string,
     modules: { [key: string]: (exports: Object, webpack: typeof Webpack) => void }, 
@@ -57,5 +68,14 @@ export declare class Platform {
 
   static enableConsoleLogging(): void;
   static disableConsoleLogging(): void;
+
+  static width(): number;
+  static height(): number;
+
+  static get sm(): number;
+  static get md(): number;
+  static get lg(): number;
+  static get xl(): number;
+  static get xxl(): number;
 
 }

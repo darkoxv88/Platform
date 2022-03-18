@@ -29,7 +29,7 @@ exports:
 
 **/
 
-(function() { // webpackBootstrap
+(function() {
 "use strict";
 
 ;// CONCATENATED MODULE: ./src/refs/root.js
@@ -226,10 +226,10 @@ function disableConsoleLogging() {
 
 function enableConsoleLogging() {
   console.log = _log;
-  console.info = _info;
-  console.debug = _debug;
-  console.warn = _warn;
-  console.error = _error;
+console.info = _info;
+console.debug = _debug;
+console.warn = _warn;
+console.error = _error;
 }
 
 ;// CONCATENATED MODULE: ./src/utility/has-own-property.js
@@ -238,6 +238,9 @@ function has_own_property_hasOwnProperty(obj, prop) {
 }
 
 ;// CONCATENATED MODULE: ./src/core/webpack.js
+
+
+
 var _modules = ({ });
 var _moduleCache = ({ });
 var _globalExports = ({ });
@@ -282,10 +285,6 @@ Webpack.export = function(key, definition) {
   }
 
   Object.defineProperty(_globalExports, key, { enumerable: true, get: (function() { return definition }) });
-}
-
-function initializeModule(id) {
-  return Webpack.require(id);
 }
 
 function installChunk(chunkId, modules, exe) {
@@ -340,75 +339,13 @@ function importToGlobal(exe) {
   }
 }
 
-;// CONCATENATED MODULE: ./src/core/platform-utility.js
-function PlatformUtilityService() { 
-  var _this = this;
-
-  for (var key in _this) {
-    if (!getRoot()[key]) {
-      getRoot()[key] = _this[key];
-    }
-  }
-}
-
-PlatformUtilityService.prototype = { 
-  isUndef: function(v) {
-    return v === undefined || v === null;
-  },
-
-  isDef: function(v) {
-    return v !== undefined && v !== null;
-  },
-
-  isTrue: function(v) {
-    return v === true;
-  },
-
-  isFalse: function(v) {
-    return v === false;
-  },
-
-  isPrimitive: function(v) {
-    return (typeof(v) === 'string' || typeof(v) === 'number' || typeof(v) === 'symbol' || typeof(v) === 'boolean');
-  },
-
-  isObject: function(obj) {
-    return (obj !== null && typeof(obj) === 'object');
-  },
-
-  isPlainObject: function(obj) {
-    return Object.prototype.toString.call(obj) === '[object Object]';
-  },
-
-  isRegExp: function(v) {
-    return Object.prototype.toString.call(v) === '[object RegExp]';
-  },
-
-  isValidArrayIndex: function(val) {
-    var n = parseFloat(String(val));
-    return n >= 0 && Math.floor(n) === n && isFinite(val);
-  },
-
-  isPromise: function(v) {
-    if (!v) {
-      return false;
-    }
-
-    return (typeof(v.then) === 'function' && typeof(v.catch) === 'function');
-  },
-
-  noop: function() { },
-
-  no: function() {
-    return false;
-  },
-
-  hasProperty: function(obj, prop) {
-    return Object.prototype.hasOwnProperty.call(obj, prop);
-  },
-}
-
 ;// CONCATENATED MODULE: ./src/platform.js
+var sm = 576;
+var md = 768;
+var lg = 992;
+var xl = 1200;
+var xxl = 1400;
+
 var _mainCall = once();
 var _isNode = (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
 
@@ -478,10 +415,6 @@ Platform.isNode = function() {
   return _isNode;
 }
 
-Platform.usePlatformUtility = function() {
-  return initializeModule('PlatformUtility').definition;
-}
-
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
@@ -498,16 +431,40 @@ Platform.disableConsoleLogging = function() {
   disableConsoleLogging();
 }
 
+Platform.width = function() {
+  getRoot().innerWidth;
+}
+
+Platform.height = function() {
+  getRoot().innerHeight;
+}
+
+Object.defineProperty(Platform, 'sm', { 
+  enumerable: true, get: function() { return sm; } 
+});
+
+Object.defineProperty(Platform, 'md', { 
+  enumerable: true, get: function() { return md; } 
+});
+
+Object.defineProperty(Platform, 'lg', { 
+  enumerable: true, get: function() { return lg; } 
+});
+
+Object.defineProperty(Platform, 'xl', { 
+  enumerable: true, get: function() { return xl; } 
+})
+
+
+Object.defineProperty(Platform, 'xxl', { 
+  enumerable: true, get: function() { return xxl; } 
+})
+
 installChunk(
   'Platform',
   {
     'Platform': (function(__exports__, __webpack__) {
       __webpack__.define(__exports__, { 'definition': (function() { return Platform; }) });
-    }),
-    'PlatformUtility': (function(__exports__, __webpack__) {
-      var _platformUtility = new PlatformUtilityService();
-
-      __webpack__.define(__exports__, { 'definition': (function() { return _platformUtility; }) });
     })
   }
 );
@@ -524,4 +481,5 @@ catch(err)
   console.error(err);
 }
 
-})();
+})()
+;

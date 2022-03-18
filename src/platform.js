@@ -6,8 +6,13 @@ import { Browser } from "./services/browser";
 import { Supports } from "./services/supports";
 
 import { enableConsoleLogging, disableConsoleLogging } from "./core/console";
-import { initializeModule, installChunk, importToGlobal } from "./core/webpack";
-import { PlatformUtilityService } from "./core/platform-utility";
+import { installChunk, importToGlobal } from "./core/webpack";
+
+var sm = 576;
+var md = 768;
+var lg = 992;
+var xl = 1200;
+var xxl = 1400;
 
 var _mainCall = once();
 var _isNode = (typeof process !== 'undefined' && ({ }).toString.call(process) === '[object process]');
@@ -78,10 +83,6 @@ Platform.isNode = function() {
   return _isNode;
 }
 
-Platform.usePlatformUtility = function() {
-  return initializeModule('PlatformUtility').definition;
-}
-
 Platform.installChunk = function(chunkId, modules, runtime) {
   installChunk(chunkId, modules, runtime);
 }
@@ -98,16 +99,40 @@ Platform.disableConsoleLogging = function() {
   disableConsoleLogging();
 }
 
+Platform.width = function() {
+  getRoot().innerWidth;
+}
+
+Platform.height = function() {
+  getRoot().innerHeight;
+}
+
+Object.defineProperty(Platform, 'sm', { 
+  enumerable: true, get: function() { return sm; } 
+});
+
+Object.defineProperty(Platform, 'md', { 
+  enumerable: true, get: function() { return md; } 
+});
+
+Object.defineProperty(Platform, 'lg', { 
+  enumerable: true, get: function() { return lg; } 
+});
+
+Object.defineProperty(Platform, 'xl', { 
+  enumerable: true, get: function() { return xl; } 
+})
+
+
+Object.defineProperty(Platform, 'xxl', { 
+  enumerable: true, get: function() { return xxl; } 
+})
+
 installChunk(
   'Platform',
   {
     'Platform': (function(__exports__, __webpack__) {
       __webpack__.define(__exports__, { 'definition': (function() { return Platform; }) });
-    }),
-    'PlatformUtility': (function(__exports__, __webpack__) {
-      var _platformUtility = new PlatformUtilityService();
-
-      __webpack__.define(__exports__, { 'definition': (function() { return _platformUtility; }) });
     })
   }
 );
