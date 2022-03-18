@@ -100,11 +100,11 @@ Platform.disableConsoleLogging = function() {
 }
 
 Platform.width = function() {
-  getRoot().innerWidth;
+  return getRoot().innerWidth;
 }
 
 Platform.height = function() {
-  getRoot().innerHeight;
+  return getRoot().innerHeight;
 }
 
 Object.defineProperty(Platform, 'sm', { 

@@ -238,9 +238,6 @@ function has_own_property_hasOwnProperty(obj, prop) {
 }
 
 ;// CONCATENATED MODULE: ./src/core/webpack.js
-
-
-
 var _modules = ({ });
 var _moduleCache = ({ });
 var _globalExports = ({ });
@@ -432,11 +429,11 @@ Platform.disableConsoleLogging = function() {
 }
 
 Platform.width = function() {
-  getRoot().innerWidth;
+  return getRoot().innerWidth;
 }
 
 Platform.height = function() {
-  getRoot().innerHeight;
+  return getRoot().innerHeight;
 }
 
 Object.defineProperty(Platform, 'sm', { 
@@ -481,5 +478,4 @@ catch(err)
   console.error(err);
 }
 
-})()
-;
+})();
